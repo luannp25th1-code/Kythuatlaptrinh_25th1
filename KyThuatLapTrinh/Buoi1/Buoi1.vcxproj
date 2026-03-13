@@ -127,7 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\buoi1.1.cpp" />
+    <ClCompile Include="buoi1.1.cpp" />
     <ClCompile Include="Buoi1.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -18,7 +18,7 @@
     <ClCompile Include="Buoi1.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\buoi1.1.cpp">
+    <ClCompile Include="buoi1.1.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
