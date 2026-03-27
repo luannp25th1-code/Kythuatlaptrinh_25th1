@@ -4,6 +4,13 @@ using namespace std;
 struct Person {
 	int id;
 	string name;
+	friend ostream& operator <<(ostream& os, const Person& p) {
+		os << "\t+ Id: " << p.id << endl;
+		os << "\t+ Name: " << p.name << endl;
+	}
+	friend istream& operator >> (istream& in, Person& p) {
+		cout << "input person information:" << endl;
+	}
 };
 struct Node {
 	Person data;
