@@ -5,13 +5,13 @@ using namespace std;
 struct Author {
     int id;
     string name;
-    friend istream& operator>>(istream& in, Author& a) {
+    friend istream& operator>>(istream& in, Author& b) {
         cout << "Author information:" << endl;
         cout << "\t+ Id:";
-        in >> a.id;
+        in >> b.id;
         cout << "\t+ Name: ";
         in.ignore();
-        getline(in, a.name);
+        getline(in, b.name);
         return in;
     }
 };
@@ -19,7 +19,7 @@ struct Book {
     int id;
     string name;
     Author author;
-    friend ostream& operator<<(ostream& os, const Book& b) {
+    friend ostream& operator<< (ostream& os, const Book b) {
         os << "Book information:" << endl;
         os << "\t+Id: " << b.id << endl;
         os << "\t+ Name: " << b.name << endl;
@@ -62,6 +62,44 @@ struct LinkedList {
         p->next = head;
         head = p;
     }
+    bool Remove(int removeId) {
+        if (head == NULL) {
+            cout << "No book availble" << endl;
+            return true;
+        }
+        Node* item = head;
+        if (item->data.id == removeId) {
+            head = item->next;
+            delete item;
+            return true;
+        }
+        while (item->next != NULL) {
+            if (item->next->data.id == removeId) {
+                Node* temp = item->next;
+                item->next = item->next->next;
+                delete temp;
+                return true;
+            }
+            item = item->next;
+
+        }
+        return false;
+    }
+    bool Update(int updateId) {
+        if (head == NULL) {
+            cout << "No book availble " << endl;
+            return false;
+        }
+        Node* item = head;
+        while (item != NULL) {
+            if (item->data.id == updateId) {
+                cin >> item->data;
+                return true;
+            }
+            item = item->next;
+        }
+        return false;
+    }
 };
 int main()
 {
@@ -95,9 +133,25 @@ int main()
             break;
         }
         case 3: {
+            int removeId;
+            cout << "Enter book's id to remove: " ;
+            cin >> removeId;
+            bool res = books.Remove(removeId);
+            if (res)
+                cout << "Remove book successfully" << endl;
+            else
+                cout << "Invalid vook id" << endl;
             break;
         }
         case 4: {
+            int updateId;
+            cout << "Enter book's id to update: ";
+            cin >> updateId;
+            bool res = books.Update(updateId);
+            if (res)
+                cout << "Update book successfully" << endl;
+            else
+                cout << "Invalid book id" << endl;
             break;
         }
         case 5: {
@@ -109,7 +163,7 @@ int main()
         case 7: {
             break;
         }
-        case 8: {
+        case 0: {
             return 0;
         }
         default: {
