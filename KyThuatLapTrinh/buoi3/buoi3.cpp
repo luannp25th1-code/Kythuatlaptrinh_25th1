@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <fstream>
 using namespace std;
 
 struct Author {
@@ -100,6 +101,71 @@ struct LinkedList {
         }
         return false;
     }
+    Book* Find(string bookName) {
+        if (head == NULL) {
+            cout << "No book available" << endl;
+            return NULL;
+        }
+        Node* item = head;
+        while (item != NULL) {
+            if (item->data.name.find(bookName) != std::string::npos) {
+                return &(item->data);
+            }
+            item = item->next;
+        }
+            return NULL;      
+    }
+    void Export(string filename) {
+        ofstream out(filename, ios::binary);
+        if (!out.is_open()) {
+            cout << "Cannot open file" << endl;
+            return;
+        }
+        Node* item = head;
+        while (item != NULL) {
+            out.write(reinterpret_cast<const char*>(&item->data.id), sizeof(item->data.id));
+
+            size_t namelength = item->data.name.size();
+            out.write(reinterpret_cast<const char*>(&namelength), sizeof(namelength));
+            out.write(item->data.name.c_str(), namelength);
+            out.write(reinterpret_cast<const char*>(&item->data.author.id), sizeof(item->data.author.id));
+
+            size_t authornamelength = item->data.author.name.size();
+            out.write(reinterpret_cast<const char*>(&authornamelength), sizeof(authornamelength));
+            out.write(item->data.author.name.c_str(), authornamelength);
+            item = item->next;
+        }
+        out.close();
+    }
+    void Import(string filename) {
+        ifstream in(filename, ios::binary);
+        if (!in.is_open()) {
+            cout << "Cannot open file" << endl;
+            return;
+        }
+        while (head != NULL) {
+            Node* temp = head;
+            head = head->next;
+            delete temp;
+        }
+        while (in.peek() != EOF) {
+            Book b;
+            in.read(reinterpret_cast<char*>(&b.id), sizeof(b.id));
+            size_t namelength;
+            in.read(reinterpret_cast<char*>(&namelength), sizeof(namelength));
+            b.name.resize(namelength);
+            in.read(&b.name[0], namelength);
+            in.read(reinterpret_cast<char*>(&b.author.id), sizeof(b.author.id));
+            size_t authornamelength;
+            in.read(reinterpret_cast<char*>(&authornamelength), sizeof(authornamelength));
+            b.author.name.resize(authornamelength);
+            in.read(&b.author.name[0], authornamelength);
+            Node* newNode = new Node;
+            newNode->Create(b);
+            AddFirst(newNode);
+        }
+        in.close();
+    }
 };
 int main()
 {
@@ -155,12 +221,27 @@ int main()
             break;
         }
         case 5: {
+            string bookName;
+            cout << "Enter book ' s name to find : ";
+            cin.ignore();
+            getline(cin, bookName);
+            Book* res = books.Find(bookName);
+            if (res != NULL) {
+                cout << *res;
+            }
+            else {
+                cout << "No book with name : " << bookName << endl;
+            }
             break;
         }
         case 6: {
+            books.Export("25TH1.dla");
+            cout << "Exported successfully" << endl;
             break;
         }
         case 7: {
+            books.Export("25TH1.dla");
+            cout << "Exported successfully" << endl;
             break;
         }
         case 0: {
