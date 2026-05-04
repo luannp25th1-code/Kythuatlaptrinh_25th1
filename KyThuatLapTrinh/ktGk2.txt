@@ -1,0 +1,8 @@
+﻿Build started at 2:02 PM...
+1>------ Build started: Project: kiểm tra GK2, Configuration: Debug x64 ------
+1>C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(531,5): warning MSB8028: The intermediate directory (x64\Debug\) contains files shared from another project (buoi6.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+1>buoi6.cpp
+1>buoi6.vcxproj -> D:\New folder (2)\KyThuatLapTrinh\x64\Debug\kiểm tra GK2.exe
+1>Done building project "buoi6.vcxproj".
+========== Build: 1 succeeded, 0 failed, 0 up-to-date, 0 skipped ==========
+========== Build completed at 2:02 PM and took 00.833 seconds ==========
